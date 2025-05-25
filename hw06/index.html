@@ -154,7 +154,7 @@
   <!-- ------------------------------------------------>
   <div class="row hw12">
     <div class="col-md-12 twenty">
-      心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。心得報告 105 字。
+      這次的文生視頻作業讓我瞭解到了許多關於AnimateDiff的使用和Stable Diffusion的基本原理，從一開始跟著助教的工作流依葫蘆畫瓢順著執行，到後面修修改改加東加西，繞了許多彎路，做出了多個讓步最後才得出還可以看的結果。這次作業80%的時間用來調參數做煉丹測試，20%的時間在嘗試學習新東西像是Motion模型，ControlNet的Openpose和IPApdater的節點怎麽使用等等，最後嘗試了幾次報錯也沒全用上，但倒是成功嘗試到了加入自己找的走路motion、負向提示詞embeddings、Latent轉Pixel的vae和最後用RIFE VFI節點來補幀，也瞭解到了在ComfyUI中目前所用到的只是冰山一角，也都是用現成的工作流和模型來調參數煉丹，還有很多東西需要學習和探索。這次作業的過程讓我感受到了生成式人工智慧的強大和潛力，也讓我對未來的學習充滿了期待。
     </div>
   </div>
 
@@ -170,22 +170,23 @@
         </tr>
         <tr>
           <td rowspan="4" id="myTotal"></td>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox1"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox1" checked></td>
           <td id='m1'>4</td>
-          <td>Simple baseline - 描述</td>
+          <td>Simple baseline - Comfy UI 環境設定完成</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox2"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox2" checked></td>
           <td id='m2'>4</td>
-          <td>Medium baseline - 描述</td>
+          <td>Medium baseline - 生成角色的圖片</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox3"></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox3" checked></td>
           <td id='m3'>2</td>
-          <td>Strong baseline - 描述</td>
+          <td>Strong baseline - 生成完整角色動畫
+</td>
         </tr>
         <tr>
-          <td><input type="checkbox" class="flipswitch" id="myCheckbox4" checked></td>
+          <td><input type="checkbox" class="flipswitch" id="myCheckbox4"></td>
           <td id='m4'>-10</td>
           <td>沒有寫100字心得</td>
         </tr>
@@ -197,12 +198,72 @@
   <!-- ------------------------------------------------>
   <div class="row hw12 bottomrow">
     <div class="col-md-12 twenty">
-      <video id="video1" style="width:100%;max-width:100%;" controls="">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-      </video>
+      <a href="https://civitai.com/models/9409/or-anything-xl?modelVersionId=90854">CheckPoint:anything-xl.safetensors</a><br>
+      <a href="https://civitai.com/models/91947/elaina-majo-no-tabitabi">LoRA:elaina.safetensors</a><br> 
+      <a href="https://civitai.com/models/58390/detail-tweaker-lora-lora">LoRA:detail-tweaker.safetensors</a><br> 
+      <a href="https://civitai.com/models/605701/animate-diff-motion-lora-walking-to-viewer">Motion:animate-diff-motion-lora.safetensors</a><br> 
+      <a href="https://civitai.com/models/7808/easynegative?modelVersionId=9208">Embeddings:easy-negative.safetensors</a><br> 
+      <a href="https://civitai.com/models/56519/negativehand-negative-embedding?modelVersionId=60938">Embeddings:negative-hand.safetensors</a><br> 
+      <a href="https://civitai.com/models/11772/verybadimagenegative">Embeddings:very-bad-image-negative.safetensors</a><br> 
+      <a href="https://civitai.com/models/22354/clearvaesd15?modelVersionId=88156">VAE:clear-vae.safetensors</a><br> 
+       <td>1.Simple baseline - Comfy UI 環境設定完成</td><br>
+       <img src="1.png" width="800" height="200"><br>
     </div>
   </div>
+  <div class="row hw12 bottomrow">
+    <div class="col-md-12 twenty">
+       <td>2.Medium baseline - 生成角色的圖片</td><br>
+       <img src="2.png"  width="640" height="960"><br>
+       <td> 使用提示詞:<br>
+        pre_text: "(masterpiece, best quality, highres), <lora:elaina_v06:0.8>, elaina, black witch hat, 1girl, solo, long floating hair, witch, white collared shirt, short black skirt, yellow neck bowtie, yellow bow, looking at viewer, black open robe, black boots,  bare legs, hair bundle, yellow hair band, (full body, full shot:1.2), (walking:1.3), (grayish blue eyes, high quality eyes), (peaceful nature:1.2), smile" <br>
 
+        batch_text:<br>
+        "0": "spring day, cherry blossom trees, (fluttering sakura petals:1.2), elaina walking down a cherry blossom trees path, (butterflies:1.2), eyes open",<br>
+        "20": "spring day, flower fields, (cherry blossom trees:1.2), (fluttering sakura petals:1.2), elaina walking down a cherry blossom trees path, (butterflies:1.2), (eyes closed)",<br>
+        "40": "spring day, flower fields, cherry blossom trees, (fluttering sakura petals:1.2), elaina walking down a cherry blossom trees path, (butterflies:1.2), eyes open",<br>
+        "60": "summer day, tropical beach, palm trees, bright sunlight, elaina walking along a scenic seaside path, blue sky, white cloud, (eyes closed)",<br>
+        "80": "summer day, tropical beach, (palm trees:1.2), bright sunlight, elaina walking along a scenic seaside path, blue sky, white cloud, (bird flying in sky:1.1), eyes open",<br>
+        "100": "summer day, tropical beach, palm trees, bright sunlight, elaina walking along a scenic seaside path, blue sky, white cloud, (eyes closed), (open mouth)",<br>
+        "120": "autumn dusk, maple trees, (falling maple leaves:1.2), golden hour sunlight, elaina walking down a maple trees path, warm sunset tones, eyes open",<br>
+        "140": "autumn dusk, (maple trees:1.2), (falling maple leaves:1.2), golden hour sunlight, elaina walking down a maple trees path, warm sunset tones, (eyes closed)",<br>
+        "160": "autumn dusk, maple trees, (falling maple leaves:1.2), golden hour sunlight, elaina walking down a maple trees path, warm sunset tones, eyes open",<br>
+        "180": "winter, snowy night, pine trees, (snowfall:1.3), (snowflakes drifting:1.1), starry sky, elaina walking down a quiet snowy path, (eyes closed), (open mouth)",<br>
+        "200": "winter, snowy night, (pine trees:1.2), (snowfall:1.3), (snowflakes drifting:1.1), starry sky, elaina walking down a quiet snowy path, (eyes wink:1.2)",<br>
+        "220": "winter, snowy night, pine trees, (snowfall:1.3), (snowflakes drifting:1.1), starry sky, elaina walking down a quiet snowy path, (happy expression:1.2)" <br>
+
+        app_text: ", (walking toward viewer:1.3), dynamic stride, (background sliding backward:1.2), depth of field, scenery moving behind, ground scrolling back, environment shifting backward"<br>
+
+        negative_prompt: embedding:easy-negative, embedding:negative-hand, embedding:very-bad-image-negative, (buildings:1.5), (urban:1.5), people, cars, roads, cityscape, fences, street signs, vehicles, pavement, concrete structures, rooftops<br>
+      </td>
+    </div>
+  </div>
+  <div class="row hw12 bottomrow">
+    <div class="col-md-12 twenty">
+       <td>3.Strong baseline - 生成完整角色動畫</td><br>
+       <img src="3.gif" ><br>
+       <td> 使用提示詞:<br>
+        pre_text: "(masterpiece, best quality, highres), <lora:elaina_v06:0.8>, elaina, black witch hat, 1girl, solo, long floating hair, witch, white collared shirt, short black skirt, yellow neck bowtie, yellow bow, looking at viewer, open black witch robe, long wide sleeves, black boots,  bare legs, hair bundle, yellow hair band, (full body, full shot:1.2), (walking:1.3), (grayish blue eyes, high quality eyes), (peaceful nature:1.2), smile" <br>
+
+        batch_text:<br>
+        "0": "spring day, cherry blossom trees, (fluttering sakura petals:1.2), elaina walking down a cherry blossom trees path, (butterflies:1.2), eyes open",<br>
+        "20": "spring day, flower fields, (cherry blossom trees:1.2), (fluttering sakura petals:1.2), elaina walking down a cherry blossom trees path, (butterflies:1.2), (eyes closed)",<br>
+        "40": "spring day, flower fields, cherry blossom trees, (fluttering sakura petals:1.2), elaina walking down a cherry blossom trees path, (butterflies:1.2), eyes open",<br>
+        "60": "summer day, tropical beach, palm trees, bright sunlight, elaina walking along a scenic seaside path, blue sky, white cloud, (eyes closed)",<br>
+        "80": "summer day, tropical beach, (palm trees:1.2), bright sunlight, elaina walking along a scenic seaside path, blue sky, white cloud, (bird flying in sky:1.1), eyes open",<br>
+        "100": "summer day, tropical beach, palm trees, bright sunlight, elaina walking along a scenic seaside path, blue sky, white cloud, (eyes closed), (open mouth)",<br>
+        "120": "autumn dusk, maple trees, (falling maple leaves:1.2), golden hour sunlight, elaina walking down a maple trees path, warm sunset tones, eyes open",<br>
+        "140": "autumn dusk, (maple trees:1.2), (falling maple leaves:1.2), golden hour sunlight, elaina walking down a maple trees path, warm sunset tones, (eyes closed)",<br>
+        "160": "autumn dusk, maple trees, (falling maple leaves:1.2), golden hour sunlight, elaina walking down a maple trees path, warm sunset tones, eyes open",<br>
+        "180": "winter, snowy night, pine trees, (snowfall:1.3), (snowflakes drifting:1.1), starry sky, elaina walking down a quiet snowy path, (eyes closed), (open mouth)",<br>
+        "200": "winter, snowy night, (pine trees:1.2), (snowfall:1.3), (snowflakes drifting:1.1), starry sky, elaina walking down a quiet snowy path, (eyes wink:1.2)",<br>
+        "220": "winter, snowy night, pine trees, (snowfall:1.3), (snowflakes drifting:1.1), starry sky, elaina walking down a quiet snowy path, (happy expression:1.2)" <br>
+
+        app_text: ", (walking toward viewer:1.3), dynamic stride, (background sliding backward:1.2), depth of field, scenery moving behind, ground scrolling back, environment shifting backward"<br>
+
+        negative_prompt: embedding:easy-negative, embedding:negative-hand, embedding:very-bad-image-negative, (buildings:1.5), (urban:1.5), people, cars, roads, cityscape, fences, street signs, vehicles, pavement, concrete structures, rooftops<br>
+      </td>
+    </div>
+  </div>
   <!-- ------------------------------------------------>
 
   <!-- ------------------------------------------------>
