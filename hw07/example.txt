@@ -1,0 +1,140 @@
+ AI-powered image generators have become very popular during the past two years.
+ But although they are so widely used, they are still a mystery for most people.
+ In this video I will give you a deep dive on stable diffusion, which has become one of
+ the most popular tools in this field.
+ It often just takes a simple text prompt to get an amazing image.
+ Or you upload an image, add a text prompt, and get something completely new.
+ And that's what we call generative AI.
+ Generative AI is not just used for image generation, it's a whole set of technologies used for
+ various purposes.
+ First we have text to text tools like chat GPT, Gemini, Claude, Mistral, Llama or Grok.
+ Then we have text to image tools like midjourney, Dali, imagine, Muse, and of course stable diffusion.
+ Then there's text to music with music LM, music gen, stable audio and Suno.
+ And finally text to video with imagine video, Lumiere, EMU video, stable video diffusion,
+ and the famous Sora by OpenAI.
+ But how does it all work?
+ First of all it needs a well-trained model.
+ So in our case we need the Mona Lisa, right?
+ But in a model trained only with Mona Lisa, all we can generate is Mona Lisa and that's
+ quite boring.
+ So we also need Albert Einstein and we need an image description because we want to generate
+ images from text.
+ But how can we generate something completely new?
+ Well we need more images and even more, we need all the images we can get.
+ In fact stable diffusion 1.5 contains more than 2.3 billion image text pairs.
+ But how can they fit into a model with a size of just 2.13 gigabytes?
+ And how can we create totally new images?
+ So what does it take to train a model?
+ We need to get 2.3 billion image text pairs.
+ We need to merge them in a model that's not too big.
+ We need to map the image description to the image or to parts of it.
+ We need to identify similar contents across all images and we need to extract the characteristics
+ from images in order to create new ones.
+ The image text pairs were scraped from the internet using the Layon 5B dataset.
+ There are still pending legal issues so some newer models try to avoid copyrighted images.
+ The next big question is how is the training done?
+ It's done with a method called deep learning.
+ And this is all about neural networks.
+ For stable diffusion we need two network layers.
+ The first one is the convolutional layer, more about it later.
+ And the second one is called the self-attention layer.
+ May sound funny but we'll get into it.
+ And both of these layers are closely connected to each other.
+ Now some basic things about neural networks to give you a better understanding.
+ Neural networks consist of neurons which are connected to each other across different layers.
+ We could somehow compare it with the human brain.
+ There's an input layer, one or more hidden layers and an output layer.
+ And if all neurons from one layer are connected with each neuron of the next layer,
+ it is called a fully connected neural network.
+ There are also weights and biases.
+ Each neural connection has a weight which determines the strength or influence of the connection.
+ Each hidden layer contains a bias which is a constant value of 1 and is added to the output.
+ This ensures that there aren't any dead, means zero, outputs.
+ During the training, new values are inserted through the input layer
+ which changes the weights of the neural connections in the whole network.
+ In easy words, you insert a bunch of numbers into the network
+ which adapts the values of the neural connections.
+ That's called learning.
+ Now we can see images as a grid of pixels with certain color values.
+ So they are also just a bunch of numbers.
+ An image with a size of 512 by 512 pixels and three color layers, red, green, blue,
+ can be stored in some 700,000 neural connections.
+ So using the network for creating a new image would require more than 600 billion neural connections.
+ And there isn't even any spatial information as each input connects to each output.
+ So fully connected neural networks aren't suitable for image generation
+ and we need something different.
+ So let's build a different kind of network
+ where only a small number of input neurons connect with the hidden layer
+ so there are way less connections.
+ That's called a convolutional neural network.
+ And the connected regions are called local receptive fields.
+ Here the weights and biases are the same for all neurons in a specific hidden layer.
+ And that means that all hidden neurons detect the same feature in an image.
+ That means that convolution can extract features from images
+ by using the relationship between adjacent pixels.
+ So a network trained with Einstein can detect him anywhere in an image.
+ Next let's see how computer vision works.
+ It deals with the question what is in an image.
+ The first level is the classification of an image.
+ Level 2 is classification plus localization.
+ Level 3 is object detection.
+ And level 4 is semantic segmentation where the position of each type of object in an image is exactly determined.
+ Now stable diffusion uses the level 4.
+ Let's see how it's done.
+ Let me introduce you to the U-net.
+ It's called U-net because it's shaped like a U.
+ And it consists of several encoder and decoder layers.
+ There are connections from the encoder to the decoder at each level to add data to the decoder.
+ An image is converted to a stream of small pixel tensors, each capturing fine details of the image.
+ These tensors are fed into the encoders.
+ Each block detects more features in the image.
+ And at each encoding step the image is downscaled to detect a larger part of the image with less details.
+ So at the end of encoding the U-net knows what's in the image but not where.
+ At decoding the image gets upscaled again in order to consolidate the information.
+ The data gathered by the encoder is added to it at each decoding layer.
+ That's been a tough one.
+ Now let's talk about noise.
+ In a step-by-step process more and more noise is added to an input image until there's only noise left.
+ To reduce the size the image is downscaled before using an autoencoder.
+ That's called latent space.
+ We can say that a noisy image is the original image plus noise.
+ So if we know the noise level we can subtract it and get back the original image.
+ That's called denoising.
+ So the noising process is reversed and it's also fed into the U-net.
+ Now how can we embed the image descriptions?
+ Let's take the painting of Mona Lisa.
+ The words are converted into a vector, a bunch of numbers.
+ And for that we're using a common list called word2vec where all English words are already listed.
+ And based on all available texts on the internet words used in similar contexts have similar vectors.
+ Here's an example for Einstein.
+ And since words are vectors you can do calculations.
+ For example king minus man plus woman equals queen.
+ And here we have our self-attention layer.
+ But there's an issue.
+ Look at the phrase the man killed the dog.
+ It has the same vector as the dog killed the man.
+ So we also need to encode the position of the words.
+ That's called positional encoding.
+ Now let's summarize.
+ An image is encoded to a vector by the convolutional layer.
+ For text we do the same with the self-attention layer.
+ What if we could use the same vector for both of them?
+ That's actually done by the clip encoder.
+ And the vector is fed into the UNet.
+ And here we have our trained model.
+ Fortunately that's all done for us by Stability AI.
+ Now let me quickly show you how to use the model.
+ Just using a simple Comfy UI workflow.
+ So we load our model.
+ We enter a positive and negative prompt.
+ We use a clip encoder to turn it into a vector.
+ Then we create an empty latent image, which is just noise.
+ Or we can also load an input image instead.
+ But then we also need a VAE encoder to bring it into latent space.
+ Then we need a case sampler for the calculations.
+ Then connect everything and render.
+ Use a VAE decoder to get the image.
+ And we're done.
+ Well, that's it.
+ Hope you enjoyed the video and see you in the next one.
+ Thanks for watching.
